@@ -19,7 +19,7 @@ class TimetrackerextraWizard(models.TransientModel):
         for w in self:
             contador = 0
             logging.warning('entrando a accion')
-            linea_factura_ids = self.env['account.move.line'].search([('product_id','in',  [1842,2077,2047,1991,2023,1923,1956]),('move_id.invoice_date','>=',w.fecha_desde), ('move_id.invoice_date','<=', w.fecha_hasta) ])
+            linea_factura_ids = self.env['account.move.line'].search([('product_id','in',  [1842,2077,2047,1991,2023,1923,1956]),('move_id.invoice_date','>=',w.fecha_desde), ('move_id.invoice_date','<=', w.fecha_hasta),('move_id.payment_state','=','not_paid') ])
             if linea_factura_ids:
                 logging.warning(linea_factura_ids)
                 for linea in linea_factura_ids:
@@ -30,6 +30,7 @@ class TimetrackerextraWizard(models.TransientModel):
                         {'invoice_line_ids': [(3,linea.id)]})
                         # linea.unlink()
                         move_id.action_post()
+                        move_id.button_process_edi_web_services()
                         contador += 1
             w.cantidad_documentos = contador
         return {
