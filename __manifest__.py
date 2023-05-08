@@ -18,6 +18,7 @@
 
     'data': [
         'views/report.xml',
+        'views/sale_views.xml',
     ],
     'qweb': [
     ],
