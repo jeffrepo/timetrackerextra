@@ -31,3 +31,9 @@ class SaleOrderLine(models.Model):
                 })
             else:
                 return res
+            
+    def _prepare_invoice_line(self, **optional_values):
+        res = super()._prepare_invoice_line(**optional_values)
+        if self.periodo > 0:
+            res['periodo'] = self.periodo
+        return res
