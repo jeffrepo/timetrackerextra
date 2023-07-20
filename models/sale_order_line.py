@@ -7,6 +7,8 @@ from odoo.exceptions import UserError
 from odoo.tools.misc import get_lang
 from odoo.osv import expression
 from odoo.tools import float_is_zero, float_compare, float_round
+import logging
+import json
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
