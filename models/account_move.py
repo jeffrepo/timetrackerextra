@@ -194,11 +194,5 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    periodo = fields.Float('Periodo')
+    periodo = fields.Float(related='sale_line_ids.periodo', string="Periodo")
     
-    @api.model
-    def _get_price_total_and_subtotal_model(self, price_unit, quantity, discount, currency, product, partner, taxes, move_type):
-
-        if self.periodo > 0:
-            price_unit = price_unit * self.periodo
-        return super()._get_price_total_and_subtotal_model(price_unit, quantity, discount, currency, product, partner, taxes, move_type)
