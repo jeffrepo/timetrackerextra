@@ -17,7 +17,7 @@
     'depends': ['product','base','account','sale'],
 
     'data': [
-        'views/report.xml',
+        #'views/report.xml',
         'views/sale_views.xml',
     ],
     'qweb': [
