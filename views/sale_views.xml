@@ -6,11 +6,23 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                  <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/list[1]/field[@name='name']" position="after">
+                <field name="date_order" position="before">
+                    <field name="supplier_ids" domain="[('partner_type', 'in', ['retail','no_retail'])]" widget="many2many_tags"/>    
+                </field>    
+                <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/list[1]/field[@name='price_unit']" position="after">
                     <field name="periodo" optional="show"/>
-                  </xpath>
+                    <field name="personal_total_time" optional="show"/>
+                    <field name="subtotal_license" optional="show"/>
+                    <field name="distribution" optional="show"/> 
+                    <field name="currency_id" optional="show"/>
+                </xpath>
+                <button name="action_confirm" position="after">
+                    <button string="Calcular distribucion" name="calculate_distribution" type="object" data-hotkey="m"
+                            class="btn-primary"/>
+                </button>   
             </field>
         </record>
 
+        
     </data>
 </odoo>

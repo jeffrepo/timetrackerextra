@@ -14,11 +14,13 @@
     'category': 'Uncategorized',
     'version': '0.1',
 
-    'depends': ['product','base','account','sale'],
+    'depends': ['product','base','account','sale', 'sale_subscription','sale_management'],
 
     'data': [
         #'views/report.xml',
         'views/sale_views.xml',
+        'views/product_template_views.xml',
+        'views/tipo_de_cliente.xml',
     ],
     'qweb': [
     ],
