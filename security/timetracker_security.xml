@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+        <record id="group_timetracker_forma_pago" model="res.groups">
+            <field name="name">No cambiar forma de pago</field>
+            <field name="comment">Este usuario mo puede cambiar la forma de pago.</field>
+        </record>
+
+</odoo>

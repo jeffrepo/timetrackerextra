@@ -18,9 +18,10 @@
 
     'data': [
         #'views/report.xml',
+        'security/timetracker_security.xml',
         'views/sale_views.xml',
         'views/product_template_views.xml',
-        'views/tipo_de_cliente.xml',
+        'views/res_partner_views.xml',
     ],
     'qweb': [
     ],
