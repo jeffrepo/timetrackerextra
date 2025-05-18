@@ -2,6 +2,12 @@
 
 from odoo import models, fields
 
+
+class Parner(models.Model):
+    _name = 'res.partner'
+
+    color = fields.Integer(string='Color Index', default=0)
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
