@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class Parner(models.Model):
-    _name = 'res.partner'
+    _inherit = 'res.partner'
 
     color = fields.Integer(string='Color Index', default=0)
 
