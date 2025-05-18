@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="timetracker_sale_order_line_wizard_form" model="ir.ui.view">
+        <field name="name">timetracker.sale.order.line.wizard.form</field>
+        <field name="model">sale.order.discount</field>
+        <field name="inherit_id" ref="sale.sale_order_line_wizard_form"/>
+        <field name="arch" type="xml">
+            <field name="discount_type" position="replace">
+                <field name="timetracker_discount_type" widget="radio"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="view_timetrackerextra_transient_report_commissions" model="ir.ui.view">
+            <field name="name">view.rtimetrackerextra.transient_report_commissions</field>
+            <field name="model">timetrackerextra.transient_report_commissions</field>
+            <field name="arch" type="xml">
+                <list string="Invoice lines" create="false">
+                    <field name="invoice_user_id" column_invisible="False"/>
+                    <field name="invoice_id" column_invisible="False"/>
+                    <field name="partner_id" column_invisible="False"/>
+                    <field name="fecha_factura" column_invisible="False"/>
+                    <field name="firste_date_payment" column_invisible="False"/>
+                    <field name="product_id" column_invisible="False"/>
+                    <field name="price_unit" column_invisible="False"/>
+                    <field name="type_product" column_invisible="False"/>
+                    <field name="chain_store_id" column_invisible="False"/>
+                    <field name="chain_commission" column_invisible="False"/>
+                    <field name="periodo" column_invisible="False"/>
+                    <field name="personal_total_time" column_invisible="False"/>
+                    <field name="distribution" column_invisible="False"/>
+                    <field name="total_general" column_invisible="False"/>
+                    <field name="subtotal" column_invisible="False"/>
+                    <field name="amount_tax" column_invisible="False"/>
+                    <field name="total" column_invisible="False"/>
+                    <field name="distributed_paid_amount" column_invisible="False"/>
+                    <field name="amount_residual" column_invisible="False"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_timetrackerextra_transient_report_commissions_pivot" model="ir.ui.view">
+           <field name="name">view.rtimetrackerextra.transient_report_commissions_pivot</field>
+           <field name="model">timetrackerextra.transient_report_commissions</field>
+           <field name="arch" type="xml">
+               <pivot string="Lab Test Analysis">
+                       <field name="invoice_id" type="row"/>
+                       <field name="product_id" type="row"/>
+               </pivot>
+           </field>
+        </record>
+        
+        <record id="view_report_account_move_line_commisions_list" model="ir.ui.view">
+            <field name="name">view.report.account.move.line.commisions_list</field>
+            <field name="model">account.move.line</field>
+            <field name="arch" type="xml">
+                <list string="Invoice lines">
+                    <field name="product_id" column_invisible="False"/>
+                </list>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="timetrackerextra_report_commisions_wizard">
+            <field name="name">timetrackerextra.report_commisions.wizard</field>
+            <field name="model">timetrackerextra.report_commisions</field>
+            <field name="arch" type="xml">
+                <form string="Comisiones">
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <footer>
+                        <button name="confirm_action" type="object" string="Generar reporte" class="oe_highlight"/>
+                        or
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="launch_timetrackerextra_report_commisions" model="ir.actions.act_window">
+            <field name="name">Reporte de comisiones</field>
+            <field name="res_model">timetrackerextra.report_commisions</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="timetrackerextra_report_commisions_wizard"/>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="timetrackerextra.model_timetrackerextra_transient_report_commissions"/>
+        </record>
+
+        <record id="record_action_comission" model="ir.actions.act_window">
+           <field name="name">Visa Application</field>
+           <field name="type">ir.actions.act_window</field>
+           <field name="res_model">timetrackerextra.transient_report_commissions</field>
+           <field name="view_mode">list,pivot</field>
+           <field name="help" type="html">
+               <p class="o_view_nocontent_smiling_face">
+                   Create a new record!
+               </p>
+           </field>
+        </record>
+        
+        <menuitem action="launch_timetrackerextra_report_commisions" id="menu_timetrackerextra_reporte_commisions" parent="account.account_reports_management_menu"/>
+    </data>
+</odoo>

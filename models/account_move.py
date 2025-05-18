@@ -8,7 +8,18 @@ import logging
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
-
+    
+    def _reverse_moves(self, default_values_list=None, cancel=False):
+        reverse_moves = super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
+        for line in reverse_moves:
+            if reverse_moves.invoice_line_ids:  
+                for line in reverse_moves.invoice_line_ids:
+                    #linea.periodo = linea.periodo
+                    line.personal_total_time = line.personal_total_time * -1
+                    line.distribution = line.distribution * -1
+                    line.total_general = line.total_general * -1
+                    logging.warning(line.name)
+        return reverse_moves
 
     def _recompute_tax_lines(self, recompute_tax_base_amount=False, tax_rep_lines_to_recompute=None):
         """ Compute the dynamic tax lines of the journal entry.
@@ -194,5 +205,8 @@ class AccountMove(models.Model):
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    periodo = fields.Float(related='sale_line_ids.periodo', string="Periodo")
+    periodo = fields.Float(related='sale_line_ids.periodo', string="Periodo", store=True)
+    personal_total_time = fields.Float(related='sale_line_ids.personal_total_time',string="Personal total", store=True)
+    distribution = fields.Float(related='sale_line_ids.distribution',string="Distribución", store=True)
+    total_general = fields.Float(related='sale_line_ids.total_general',string="Total general", store=True)
     

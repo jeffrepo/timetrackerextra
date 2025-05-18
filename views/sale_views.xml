@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        
         <record id="timetracker_view_order_form" model="ir.ui.view">
             <field name="name">timetracker.sale.order.form</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <field name="partner_invoice_id" position="attributes">
+                    <attribute name="domain">[('company_id', '=', company_id)]</attribute>
+                </field>
+                <field name="partner_invoice_id" position="attributes">
                     <attribute name="domain">[('id', 'child_of', partner_id),('type','=','invoice')]</attribute>
                 </field>
                 <field name="partner_shipping_id" position="attributes">
-                    <attribute name="domain">[('id', 'child_of', partner_id),('type','=','delivery')]</attribute>
+                    <attribute name="domain">[('id', 'child_of', parent_partner_id)]</attribute>
                 </field>   
-                <field name="date_order" position="before">
-                    <field name="supplier_ids" domain="[('tipo_cliente', 'in', ['proveedor','no_proveedor'])]" widget="many2many_tags"/>    
+                <field name="date_order" position="after">
+                    <field name="supplier_ids" domain="[('is_company','=',True),('tipo_cliente', 'in', ['proveedor','no_proveedor'])]" widget="many2many_tags"/>    
                 </field>    
                 <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/list[1]/field[@name='price_unit']" position="after">
                     <field name="periodo" optional="show"/>
@@ -23,7 +27,6 @@
                 </xpath> 
             </field>
         </record>
-
         
     </data>
 </odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="timetrackerextra_view_move_line_tree" model="ir.ui.view">
+            <field name="name">timetrackerextra.account.move.line.list</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="quantity" optional="hide"/>
+                    <field name="distribution" optional="hide"/>
+                    <field name="personal_total_time" optional="hide"/>
+                    <field name="periodo" optional="hide"/>
+                </field>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

@@ -18,10 +18,14 @@
 
     'data': [
         #'views/report.xml',
+        'wizard/sale_order_discount_views.xml',
+        'wizard/timetrackerextra_report_commisions_views.xml',
+        'report/account_invoice_report_view.xml',
         'security/timetracker_security.xml',
         'views/sale_views.xml',
         'views/product_template_views.xml',
         'views/res_partner_views.xml',
+        'views/account_move_views.xml',
     ],
     'qweb': [
     ],
