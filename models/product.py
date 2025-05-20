@@ -20,4 +20,4 @@ class ProductTemplate(models.Model):
                                      ('equipos_biometricos','Equipos Biométricos'),
                                      ('prenomina','Prenómina'),
                                      ('otros','Otros')], 'Type of product', default='none', required=True)
-    chain_store = fields.Many2one('res.partner', string='Cadena comercial', domain="[('is_company','=',True),('tipo_cliente', '=', 'cadena')]")
+    chain_store = fields.Many2one('res.partner', string='Cadena comercial', domain="[('is_company','=',True),('tipo_cliente', '=', 'cadena')]", store= True)
