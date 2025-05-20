@@ -209,4 +209,5 @@ class AccountMoveLine(models.Model):
     personal_total_time = fields.Float(related='sale_line_ids.personal_total_time',string="Personal total", store=True)
     distribution = fields.Float(related='sale_line_ids.distribution',string="Distribución", store=True)
     total_general = fields.Float(related='sale_line_ids.total_general',string="Total general", store=True)
+    cadena_comercial = fields.Many2one('res.partner', related='product_id.chain_store', string='Cadena Comercial', readonly=True, store=True)
     
