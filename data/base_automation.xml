@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="mail_template_timetracker_ordenes_autorizar" model="mail.template">
+        <field name="name">Ordenes por autorizar</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="subject">Ordenes por autorizar {{ ctx['ordenes'] }}</field>
+        <field name="email_to">${ctx.get('email_to', '')}</field>
+        <field name="description">Ordenes por autorizar</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 15px;">
+            Ordenes por autorizar!!<br />
+            <!-- - Ordenes <t t-out="object.origin or ''"/> -->
+
+    </p>    
+</div>    
+        </field>    
+    </record>    
+    
+    <record id="accion_enviar_correo" model="ir.actions.server">
+        <field name="name">Accion codigo python</field>
+        <field name="model_id" ref="model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">
+record._ordenes_por_aprobar()
+        </field>    
+    </record>
+    
+    <!-- <record id="inglot_enviar_correo_producto_negativo" model="base.automation">
+        <field name="name">Enviar correo productos en negativo</field>
+        <field name="model_id" ref="model_stock_picking"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="trigger_field_ids" eval="[(6,0, [ref('stock.field_stock_picking__date_done')])]"/>
+        <field name="action_server_ids" eval="[(6, 0, [ref('inglot.accion_enviar_correo')])]"/>
+    </record> -->
+    
+</odoo>

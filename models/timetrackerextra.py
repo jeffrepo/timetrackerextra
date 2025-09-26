@@ -31,6 +31,17 @@ class TimeTrackerExtraReportCommisions(models.TransientModel):
     personal_total_time = fields.Float(string="Personal total")
     distribution = fields.Float(string="Distribución")
     total_general = fields.Float(string="Total general")
+
+class TimeTrackerPoliticaDescuento(models.Model):
+    _name = 'timetrackerextra.politica_descuento'
+
+    active = fields.Boolean('Active', default=True)
+    name = fields.Char('Nombre')
+    tipo_politica = fields.Selection([('monto_maximo', 'Monto máximo'),
+                                     ('sin_limite', 'Sin límite')], 'Tipo de política', required = True)
+    monto_maximo = fields.Float('Monto máximo de la orden')
+    porcentaje_maximo_descuento = fields.Float('Porcentaje máximo de descuento')
+    puesto_trabajo_aprobador_id = fields.Many2one('hr.job','Puesto de trabajo del aprobador')
     
     
     

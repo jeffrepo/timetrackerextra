@@ -6,4 +6,24 @@
             <field name="comment">Este usuario mo puede cambiar la forma de pago.</field>
         </record>
 
+        <record id="group_timetracker_ejecutivo" model="res.groups">
+            <field name="name">Ejecutivo</field>
+            <field name="comment">Permiso para validar descuento nivel ejecutivo.</field>
+        </record>
+
+        <record id="group_timetracker_coordinador" model="res.groups">
+            <field name="name">Coordinador</field>
+            <field name="comment">Permiso para validar descuento nivel coordinador.</field>
+        </record>
+
+        <record id="group_timetracker_director_comercial" model="res.groups">
+            <field name="name">Director comercial</field>
+            <field name="comment">Permiso para validar descuento nivel director comercial.</field>
+        </record>
+
+        <record id="group_timetracker_director_general" model="res.groups">
+            <field name="name">Director general</field>
+            <field name="comment">Permiso para validar descuento nivel director general.</field>
+        </record>
+
 </odoo>

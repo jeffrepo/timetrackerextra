@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="timetracker_politica_descuento_tree" model="ir.ui.view">
+            <field name="name">timetracker.politica_descuento.list</field>
+            <field name="model">timetrackerextra.politica_descuento</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="tipo_politica"/>
+                    <field name="monto_maximo"/>
+                    <field name="porcentaje_maximo_descuento"/>
+                    <field name="puesto_trabajo_aprobador_id"/>
+                </list>
+            </field>
+        </record>
+    
+        <record id="view_timetracker_politica_descuento_form" model="ir.ui.view">
+            <field name="name">timetracker.politica_descuento.form</field>
+            <field name="model">timetrackerextra.politica_descuento</field>
+            <field name="arch" type="xml">
+                <form string="Politicas" class="o_sale_order">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="name"/>
+                            <field name="tipo_politica"/>
+                            <field name="monto_maximo" invisible="tipo_politica != 'monto_maximo'"/>
+                            <field name="porcentaje_maximo_descuento"/>
+                            <field name="puesto_trabajo_aprobador_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_timetracker_politica_descuento_filter" model="ir.ui.view">
+            <field name="name">timetracker.politica.descuento.select</field>
+            <field name="model">timetrackerextra.politica_descuento</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="name"/>
+                    <field name="tipo_politica"/>
+                    <field name="monto_maximo"/>
+                    <field name="porcentaje_maximo_descuento"/>
+                    <field name="puesto_trabajo_aprobador_id"/>
+                </search>
+            </field>
+        </record>
+        
+        <record id="action_timetracker_politica_descuento" model="ir.actions.act_window">
+            <field name="name">Política de descuentos</field>
+            <field name="res_model">timetrackerextra.politica_descuento</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_timetracker_politica_descuento_filter"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear nuevo objeto
+                </p>
+            </field>
+        </record>
+
+        <record id="timetracker_descuentos_aprobar_tree" model="ir.ui.view">
+            <field name="name">timetracker.descuentos.aprobar.list</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="date_order"/>
+                    <field name="descuento"/>
+                    <field name="amount_untaxed"/>
+                    <field name="amount_total"/>
+                    <field name="name"/>
+                    <field name="aprobado_por"/>
+                    <field name="fecha_aprobacion"/>
+                    
+                </list>
+            </field>
+        </record>
+        
+        <record id="view_timetracker_descuentos_aprobar_filter" model="ir.ui.view">
+            <field name="name">timetracker.descuentos.aprobar.select</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="name"/>
+                    <filter string="Aprobadas" name="aprobado_por" domain="[('aprobado_por', '!=', False)]" help="Ordenes aprobadas"/>
+                    <filter string="Pendientes" name="aprobado_por" domain="[('descuento','>',0),('aprobado_por', '=', False)]" help="Ordenes aprobadas"/>
+                </search>
+            </field>
+        </record>
+
+        
+        <record id="action_timetracker_descuentos_aprobar" model="ir.actions.act_window">
+            <field name="name">Descuentos por aprobar</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_timetracker_descuentos_aprobar_filter"/>
+            <field name="view_id" ref="timetracker_descuentos_aprobar_tree"/>
+            <field name="domain">[('descuento', '>', 0)]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear nuevo objeto
+                </p>
+            </field>
+        </record>
+        
+        <menuitem id="menu_timetracker_politica_descuento" action="action_timetracker_politica_descuento" parent="sale.menu_sale_config" sequence="100"/>
+
+        <menuitem id="menu_timetracker_descuentos_aprobar" action="action_timetracker_descuentos_aprobar" parent="sale.sale_order_menu" sequence="100"/>
+        
+    </data>
+</odoo>

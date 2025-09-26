@@ -11,3 +11,4 @@ class SaleOrderDiscount(models.TransientModel):
         ],
         default='sol_discount',
     )
+
