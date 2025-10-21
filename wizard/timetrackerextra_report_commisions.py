@@ -15,7 +15,7 @@ class ReporteCommisions(models.TransientModel):
         invoice_line_list = []
         data_ids = []
         domain = [("id","in",data_ids)]
-        payment_ids = self.env["account.payment"].search([("payment_type","=","inbound"),("date",">=",self.date_from),("date","<=", self.date_to),("reconciled_invoice_ids","!=",[])],order="date asc")
+        payment_ids = self.env["account.payment"].search([("payment_type","=","inbound"),("date",">=",self.date_from),("date","<=", self.date_to),("is_reconciled","=",True)],order="date asc")
         tracker_ids = self.env["timetrackerextra.transient_report_commissions"].search([])
         logging.warning(tracker_ids)
         if tracker_ids:
