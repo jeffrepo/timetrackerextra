@@ -15,7 +15,7 @@ class ReporteCommisions(models.TransientModel):
         invoice_line_list = []
         data_ids = []
         domain = [("id","in",data_ids)]
-        payment_ids = self.env["account.payment"].search([("payment_type","=","inbound"),("date",">=",self.date_from),("date","<=", self.date_to),("reconciled_invoice_ids","!=",False)],order="date asc")
+        payment_ids = self.env["account.payment"].search([("payment_type","=","inbound"),("date",">=",self.date_from),("date","<=", self.date_to),("reconciled_invoice_ids","!=",[])],order="date asc")
         tracker_ids = self.env["timetrackerextra.transient_report_commissions"].search([])
         logging.warning(tracker_ids)
         if tracker_ids:
@@ -116,7 +116,7 @@ class ReporteCommisions(models.TransientModel):
         #                             logging.warning("payment")
         #                             logging.warning(payment)
         #                             logging.warning(matched.amount)
-                        
+
                         # if invoice.invoice_line_ids:
                         #     for line in invoice.invoice_line_ids:
                         #         #p1
@@ -168,7 +168,7 @@ class ReporteCommisions(models.TransientModel):
                                  #   "distributed_paid_amount": distributed_paid_amount,
                                    # "amount_residual": amount_residual,
                                     #"firste_date_payment": firste_date_payment,
-                                #}        
+                                #}
         if len(invoice_line_list) > 0:
             for line in invoice_line_list:
                 logging.warning(line)
@@ -187,4 +187,4 @@ class ReporteCommisions(models.TransientModel):
             'view_mode': 'list,pivot',
             'domain': domain,
             'target': 'current'
-        } 
+        }
