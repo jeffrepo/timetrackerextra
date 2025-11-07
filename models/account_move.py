@@ -3,21 +3,50 @@
 from odoo import models, fields, api
 import logging
 
-
-
-
 class AccountMove(models.Model):
     _inherit = 'account.move'
-    
+
+    def calculate_distribution(self):
+        for order in self:
+            subtotal_license = 0
+            subtotal_transmision = 0
+            for line in order.invoice_line_ids:
+                if line.product_id.type_product_service == "license":
+                    subtotal_license += line.price_subtotal
+                if line.product_id.type_product_service == "transmision":
+                    subtotal_transmision += line.price_subtotal
+
+            for line in order.invoice_line_ids:
+                if line.product_id.type_product_service == "transmision":
+                    line.distribution = line.price_subtotal * -1
+                    line.total_general = line.distribution + (line.price_subtotal * -1)
+                else:
+                    if subtotal_license > 0:
+                        if line.product_id.type_product_service == False:
+                            line.total_general = line.distribution + (line.price_subtotal * -1)
+                            line.distribution = 0
+                        else:
+                            line.distribution = (line.price_subtotal / subtotal_license) * subtotal_transmision
+                            line.total_general = line.distribution + (line.price_subtotal * -1)
+                    else:
+                        line.total_general = line.distribution + (line.price_subtotal * -1)
+
+    def write(self, vals):
+        res = super().write(vals)
+        for factura in self:
+            if factura.move_type == 'out_refund':
+                factura.calculate_distribution()
+        return res
+
     def _reverse_moves(self, default_values_list=None, cancel=False):
         reverse_moves = super()._reverse_moves(default_values_list=default_values_list, cancel=cancel)
         for line in reverse_moves:
-            if reverse_moves.invoice_line_ids:  
+            if reverse_moves.invoice_line_ids:
                 for line in reverse_moves.invoice_line_ids:
                     #linea.periodo = linea.periodo
                     line.personal_total_time = line.personal_total_time * -1
                     line.distribution = line.distribution * -1
-                    line.total_general = line.total_general * -1
+                    #line.total_general = line.total_general * -1
                     logging.warning(line.name)
         return reverse_moves
 
@@ -210,4 +239,3 @@ class AccountMoveLine(models.Model):
     distribution = fields.Float(related='sale_line_ids.distribution',string="Distribución", store=True)
     total_general = fields.Float(related='sale_line_ids.total_general',string="Total general", store=True)
     cadena_comercial = fields.Many2one('res.partner', related='product_id.chain_store', string='Cadena Comercial', readonly=True, store=True)
-    
